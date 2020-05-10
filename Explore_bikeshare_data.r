@@ -18,14 +18,6 @@ ny = read.csv('new_york_city.csv')
 wash = read.csv('washington.csv')
 chi = read.csv('chicago.csv')
 
-head(ny)
-
-head(wash)
-
-head(chi)
-
-
-
 right = function(data, num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data)))
 }
@@ -33,18 +25,10 @@ mid = function(data,num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data))-3)
 }
 
-
-# right(ny$End.Time,8)
-# mid(ny$End.Time,8)
-
 ny <- ny %>% mutate(ny.end.time = mid(ny$End.Time,8))
 ny <- subset(ny,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(ny)
-?as.times
 
-length(levels(ny$Start.Station))
-length(levels(ny$End.Station))
-summary(ny)
+
 twohr = "2 hour"
 sixhr = "6 hour"
 
@@ -69,7 +53,7 @@ graph(ny,ny$ny.end.time,sixhr) +
 
 chi <- chi %>% mutate(chi.end.time = mid(chi$End.Time,8))
 chi <- subset(chi,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(chi)
+
 #Chi: What time of day are bikes most commonly checked in?
 graph(chi,chi$chi.end.time,sixhr) +
   ggtitle('Chi Bike Check-in Times for Customers & Subscribers')
@@ -82,7 +66,7 @@ graph(chi,chi$chi.end.time,sixhr) +
 
 wash <- wash %>% mutate(wash.end.time = mid(wash$End.Time,8))
 wash <- subset(wash,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(wash)
+
 #Wash: What time of day are bikes most commonly checked in?
 graph(wash,wash$wash.end.time,sixhr) +
   ggtitle('Wash Bike Check-in Times for Customers & Subscribers')
@@ -96,7 +80,7 @@ graph(wash,wash$wash.end.time,sixhr) +
 #expect so much activity so early in the day.
 #########
 
-names(ny)
+
 #Combined data
 ny2 = ny[,c(1:7,10)] %>% mutate(city = "ny") %>%
   rename(city.end.time = ny.end.time)
@@ -105,7 +89,7 @@ chi2 = chi[,c(1:7,10)] %>% mutate(city = "chi") %>%
 wash2 = wash %>% mutate(city = "wash") %>%
   rename(city.end.time = wash.end.time)
 all <- rbind(ny2,chi2,wash2)
-levels(all$User.Type)
+
 
 #All: What time of day are bikes most commonly checked in?
 ggplot(data=subset(all,User.Type == 'Customer' | User.Type == 'Subscriber'), 
@@ -127,8 +111,6 @@ right = function(data, num_char) {
 mid = function(data,num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data))-3)
 }
-# right(ny$End.Time,8)
-# mid(ny$End.Time,8)
 
 
 curr_yr = 2020
@@ -145,10 +127,6 @@ ny.age <- ny.age %>% mutate(age_bucket = case_when(
 ny.age <- subset(ny.age, !is.na(age_bucket))
 ny.age <- subset(ny.age, User.Type == 'Customer' | User.Type == 'Subscriber')
 
-head(ny.age)
-table(ny.age$age_bucket)
-names(ny.age)
-class(ny.age$ny.end.time)
 
 histogram = function(dat,e.time){
   ggplot(data=subset(dat, !is.na(age_bucket)),
