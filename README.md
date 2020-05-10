@@ -12,6 +12,7 @@ by Juhyun Shin
 *Findings:* **In NY:** No, Check in times are similar across age buckets, but different between customer and subscriber user types. Most used category are subscribers between ages of 26-50. Distribution for this category is similar to second most used category which are subscribers between ages of 51-75. **In Chi:** No, check in times are not different across age groups. Chi has signficantly less Customers than subscribers. Chi only has 91 customers vs 4416 in NY. Chi & NY Combined: No, since distribution for each city was about the same from above. In general, there is a lot of activity around 3PM to 6PM. This could pose issues on supply depending on low/high frequency bike stations.
 
 3) NY, CHI: Do rental durations differ by age?
+*Findings:* Tops of darkest regions of the age to rental minutes shows there is a decline in duration as user’s age increases. But, the mean (solid line) and percentiles (dotted lines) are relatively flat. Additional insights from this visualization are that customers are concentrated in the under 40 age group, as seen by the darker blue area. 90% of subscribers rentals are less than 25 minutes (highest dotted line) indicating that subscribers most likely have routes set prior to rental compared to customers. Gap between mean and median duration for subscribers is smaller in Chi than NY indicating that either Chi has more extreme outliers than NY or that NY has long-tailed distribution.
 
 ### Data from Motivate bike share company
 chicago.csv, new-york-city.csv, washington.csv
