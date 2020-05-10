@@ -193,10 +193,6 @@ ny = read.csv('new-york-city.csv')
 wash = read.csv('washington.csv')
 chi = read.csv('chicago.csv')
 
-names(ny)
-names(chi)
-names(wash)
-
 ny3 <- ny %>% mutate(city = "ny")
 chi3 <- chi %>% mutate(city = "chi")
 ny_chi <- rbind(ny3,chi3)
@@ -207,7 +203,7 @@ ny_chi <- ny_chi %>% mutate(age = (curr_yr - ny_chi$Birth.Year)) %>%
   mutate(minutes = ny_chi$Trip.Duration / 60)
 ny_chi <- subset(ny_chi, !is.na(age))
 ny_chi <- subset(ny_chi, User.Type == 'Customer' | User.Type == 'Subscriber')
-head(ny_chi)
+
 #ny_chi_sub <- subset(ny_chi,hours < 6 | (age < 90 & age > 10))
 
 #make this faster
@@ -239,15 +235,6 @@ ggplot(data = subset(ny_chi, !is.na(age)),
 #Gap between mean and median duration for subscribers is smaller
 #in Chi than NY indicating that either Chi has more extreme outliers
 #than NY or that NY has long-tailed distribution.
-
-ny_chi <- ny_chi %>% arrange(desc(ny_chi$Trip.Duration))
-head(ny_chi,25)
-209952 / 60 / 60
-24 * 60 * 60
-dim(subset(ny_chi,Trip.Duration > 50000))[1]
-50000 / 60 / 60
-summary(ny_chi$age)
-names(ny_chi)
 
 
 system('python -m nbconvert Explore_bikeshare_data.ipynb')
