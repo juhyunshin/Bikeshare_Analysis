@@ -141,8 +141,7 @@ histogram(ny.age,ny.age$ny.end.time) +
   facet_grid(~User.Type) +
   ggtitle('NY Age Bucket by Check-In Time')
 rename(count(ny.age,User.Type,age_bucket), Freq = n)
-table(ny.age$age_bucket)
-table(ny.age$User.Type)
+
 #No, Check in times are similar across age buckets,
 #but different between customer and subscriber user types.
 #Most used category are subscribers between ages of 26-50.
@@ -167,8 +166,7 @@ histogram(chi.age,chi.age$chi.end.time) +
   facet_grid(~User.Type) +
   ggtitle('Chi Age Bucket by Check-In Time')
 rename(count(chi.age,User.Type,age_bucket), Freq = n)
-table(chi.age$age_bucket)
-table(chi.age$User.Type)
+
 #No, check in times are not different across age groups
 #Chi has signficantly less Customers than subscribers.
 #Chi only has 91 customers vs NY which has 4416.
@@ -185,15 +183,11 @@ histogram(all.age,all.age$city.end.time) +
   facet_grid(User.Type~city) +
   ggtitle('Age Bucket by Check-In Time')
 rename(count(all.age,User.Type,age_bucket), Freq = n)
-table(all.age$age_bucket)
-table(all.age$User.Type)
-table(all.age$city)
+
 #No, since distribution for each city was about the same from above.
 #In general, there is a lot of activity around 3PM to 6PM.
 #This could pose issues on supply depending on low/high frequency
 #bike stations.
-
-names(all.age)
 
 ny = read.csv('new-york-city.csv')
 wash = read.csv('washington.csv')
