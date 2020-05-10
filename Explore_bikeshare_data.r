@@ -18,14 +18,6 @@ ny = read.csv('new_york_city.csv')
 wash = read.csv('washington.csv')
 chi = read.csv('chicago.csv')
 
-head(ny)
-
-head(wash)
-
-head(chi)
-
-
-
 right = function(data, num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data)))
 }
@@ -33,18 +25,10 @@ mid = function(data,num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data))-3)
 }
 
-
-# right(ny$End.Time,8)
-# mid(ny$End.Time,8)
-
 ny <- ny %>% mutate(ny.end.time = mid(ny$End.Time,8))
 ny <- subset(ny,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(ny)
-?as.times
 
-length(levels(ny$Start.Station))
-length(levels(ny$End.Station))
-summary(ny)
+
 twohr = "2 hour"
 sixhr = "6 hour"
 
@@ -69,7 +53,7 @@ graph(ny,ny$ny.end.time,sixhr) +
 
 chi <- chi %>% mutate(chi.end.time = mid(chi$End.Time,8))
 chi <- subset(chi,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(chi)
+
 #Chi: What time of day are bikes most commonly checked in?
 graph(chi,chi$chi.end.time,sixhr) +
   ggtitle('Chi Bike Check-in Times for Customers & Subscribers')
@@ -82,7 +66,7 @@ graph(chi,chi$chi.end.time,sixhr) +
 
 wash <- wash %>% mutate(wash.end.time = mid(wash$End.Time,8))
 wash <- subset(wash,User.Type == 'Customer' | User.Type == 'Subscriber')
-head(wash)
+
 #Wash: What time of day are bikes most commonly checked in?
 graph(wash,wash$wash.end.time,sixhr) +
   ggtitle('Wash Bike Check-in Times for Customers & Subscribers')
@@ -96,7 +80,7 @@ graph(wash,wash$wash.end.time,sixhr) +
 #expect so much activity so early in the day.
 #########
 
-names(ny)
+
 #Combined data
 ny2 = ny[,c(1:7,10)] %>% mutate(city = "ny") %>%
   rename(city.end.time = ny.end.time)
@@ -105,7 +89,7 @@ chi2 = chi[,c(1:7,10)] %>% mutate(city = "chi") %>%
 wash2 = wash %>% mutate(city = "wash") %>%
   rename(city.end.time = wash.end.time)
 all <- rbind(ny2,chi2,wash2)
-levels(all$User.Type)
+
 
 #All: What time of day are bikes most commonly checked in?
 ggplot(data=subset(all,User.Type == 'Customer' | User.Type == 'Subscriber'), 
@@ -127,8 +111,6 @@ right = function(data, num_char) {
 mid = function(data,num_char) {
   substr(data,nchar(as.character(data)) - (num_char-1),nchar(as.character(data))-3)
 }
-# right(ny$End.Time,8)
-# mid(ny$End.Time,8)
 
 
 curr_yr = 2020
@@ -145,10 +127,6 @@ ny.age <- ny.age %>% mutate(age_bucket = case_when(
 ny.age <- subset(ny.age, !is.na(age_bucket))
 ny.age <- subset(ny.age, User.Type == 'Customer' | User.Type == 'Subscriber')
 
-head(ny.age)
-table(ny.age$age_bucket)
-names(ny.age)
-class(ny.age$ny.end.time)
 
 histogram = function(dat,e.time){
   ggplot(data=subset(dat, !is.na(age_bucket)),
@@ -163,8 +141,7 @@ histogram(ny.age,ny.age$ny.end.time) +
   facet_grid(~User.Type) +
   ggtitle('NY Age Bucket by Check-In Time')
 rename(count(ny.age,User.Type,age_bucket), Freq = n)
-table(ny.age$age_bucket)
-table(ny.age$User.Type)
+
 #No, Check in times are similar across age buckets,
 #but different between customer and subscriber user types.
 #Most used category are subscribers between ages of 26-50.
@@ -189,8 +166,7 @@ histogram(chi.age,chi.age$chi.end.time) +
   facet_grid(~User.Type) +
   ggtitle('Chi Age Bucket by Check-In Time')
 rename(count(chi.age,User.Type,age_bucket), Freq = n)
-table(chi.age$age_bucket)
-table(chi.age$User.Type)
+
 #No, check in times are not different across age groups
 #Chi has signficantly less Customers than subscribers.
 #Chi only has 91 customers vs NY which has 4416.
@@ -207,23 +183,15 @@ histogram(all.age,all.age$city.end.time) +
   facet_grid(User.Type~city) +
   ggtitle('Age Bucket by Check-In Time')
 rename(count(all.age,User.Type,age_bucket), Freq = n)
-table(all.age$age_bucket)
-table(all.age$User.Type)
-table(all.age$city)
+
 #No, since distribution for each city was about the same from above.
 #In general, there is a lot of activity around 3PM to 6PM.
 #This could pose issues on supply depending on low/high frequency
 #bike stations.
 
-names(all.age)
-
 ny = read.csv('new-york-city.csv')
 wash = read.csv('washington.csv')
 chi = read.csv('chicago.csv')
-
-names(ny)
-names(chi)
-names(wash)
 
 ny3 <- ny %>% mutate(city = "ny")
 chi3 <- chi %>% mutate(city = "chi")
@@ -235,7 +203,7 @@ ny_chi <- ny_chi %>% mutate(age = (curr_yr - ny_chi$Birth.Year)) %>%
   mutate(minutes = ny_chi$Trip.Duration / 60)
 ny_chi <- subset(ny_chi, !is.na(age))
 ny_chi <- subset(ny_chi, User.Type == 'Customer' | User.Type == 'Subscriber')
-head(ny_chi)
+
 #ny_chi_sub <- subset(ny_chi,hours < 6 | (age < 90 & age > 10))
 
 #make this faster
@@ -267,15 +235,6 @@ ggplot(data = subset(ny_chi, !is.na(age)),
 #Gap between mean and median duration for subscribers is smaller
 #in Chi than NY indicating that either Chi has more extreme outliers
 #than NY or that NY has long-tailed distribution.
-
-ny_chi <- ny_chi %>% arrange(desc(ny_chi$Trip.Duration))
-head(ny_chi,25)
-209952 / 60 / 60
-24 * 60 * 60
-dim(subset(ny_chi,Trip.Duration > 50000))[1]
-50000 / 60 / 60
-summary(ny_chi$age)
-names(ny_chi)
 
 
 system('python -m nbconvert Explore_bikeshare_data.ipynb')
