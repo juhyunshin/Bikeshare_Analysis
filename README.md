@@ -1,7 +1,7 @@
 ### Date created: May 9, 2020
 
-### Project Title
-Replace the Project Title
+### Programming for Data Science in R
+by Juhyun Shin
 
 ### Description
 Describe what your project is about and what it does
