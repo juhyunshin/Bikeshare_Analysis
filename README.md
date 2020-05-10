@@ -10,8 +10,8 @@ by Juhyun Shin
 
 3) NY, CHI: Do rental durations differ by age?
 
-### Files used
-Include the files used
+### Data from Motivate bike share company
+chicago.csv, new-york-city.csv, washington.csv
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+Udacity Nanodegree Program
